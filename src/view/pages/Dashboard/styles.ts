@@ -12,6 +12,21 @@ export const Container = styled.div`
   }
 `;
 
+export const HeaderFilter = styled.div`
+  width: 100%;
+
+  input {
+    min-width: 280px;
+    height: 40px;
+    border: none;
+    border-radius: 10px;
+    border: 1px solid ${(props) => props.theme.colors.baseFont4};
+    background: transparent;
+    padding-left: 10px;
+    color: ${(props) => props.theme.colors.baseFont1};
+  }
+`;
+
 export const RowCards = styled.div`
   width: 100%;
   display: flex;

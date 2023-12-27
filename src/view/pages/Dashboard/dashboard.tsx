@@ -1,4 +1,10 @@
-import { BoxChart, Container, RowCards, RowChart } from "./styles";
+import {
+  BoxChart,
+  Container,
+  RowCards,
+  RowChart,
+  HeaderFilter,
+} from "./styles";
 import Card from "../../components/Card/Card";
 import Ray from "../../components/Icons/Ray";
 import LineChart from "../../components/Icons/LineChart";
@@ -20,11 +26,17 @@ export default function Dashboard() {
 
   const { data: dataAggrElectricity } = useElectricity({ aggr: "date" });
   const { data: dataAggrCompensated } = useCompensated({ aggr: "date" });
-  const { data: dataAggrValueCompensated } = useValueCompensated({ aggr: "date" });
+  const { data: dataAggrValueCompensated } = useValueCompensated({
+    aggr: "date",
+  });
   const { data: dataAggrValueTotal } = useValueTotal({ aggr: "date" });
 
   return (
     <Container>
+      <HeaderFilter>
+        <input placeholder="Nº do cliente" />
+      </HeaderFilter>
+
       <RowCards>
         <Card
           title="Consumo energia elétrica"
@@ -75,7 +87,7 @@ export default function Dashboard() {
                   (item: { sum: number; date: string }) => item.sum
                 ),
                 label: "Energia Compensada (kwh)",
-                backgroundColor: "#FFD369",
+                backgroundColor: "#69ff8f",
               },
             ]}
           />
@@ -88,7 +100,7 @@ export default function Dashboard() {
             dataset={[
               {
                 data: dataAggrValueCompensated?.data.map(
-                  (item: { sum: number; date: string }) => item.sum  * (-1)
+                  (item: { sum: number; date: string }) => item.sum * -1
                 ),
                 label: "Economia GD (R$)",
                 backgroundColor: "#EEEEEE",
@@ -98,7 +110,7 @@ export default function Dashboard() {
                   (item: { sum: number; date: string }) => item.sum
                 ),
                 label: "Valor Total sem GD",
-                backgroundColor: "#FFD369",
+                backgroundColor: "#69ff8f",
               },
             ]}
           />

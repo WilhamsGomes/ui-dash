@@ -20,6 +20,7 @@ ChartJS.register(
 
 interface IChartBar {
   label: string[];
+  title?: string;
   dataset: DatasetChart[];
 }
 
@@ -29,7 +30,7 @@ interface DatasetChart {
   backgroundColor: string;
 }
 
-export function ChartBar({ label, dataset }: IChartBar) {
+export function ChartBar({ title = "Visão geral",label, dataset }: IChartBar) {
   const options = {
     responsive: true,
     plugins: {
@@ -39,7 +40,7 @@ export function ChartBar({ label, dataset }: IChartBar) {
       },
       title: {
         display: true,
-        text: "Chart.js Bar Chart",
+        text: title,
         color: "white",
       },
     },
@@ -49,7 +50,7 @@ export function ChartBar({ label, dataset }: IChartBar) {
           color: "rgba(255, 255, 255, 0.188)",
         },
         ticks: {
-          color: "white",
+          color: "#a3a3b9",
         },
       },
       x: {
@@ -57,7 +58,7 @@ export function ChartBar({ label, dataset }: IChartBar) {
           color: "rgba(255, 255, 255, 0.188)",
         },
         ticks: {
-          color: "white",
+          color: "#a3a3b9",
         },
       },
     },

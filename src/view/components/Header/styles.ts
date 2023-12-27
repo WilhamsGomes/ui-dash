@@ -40,7 +40,7 @@ export const List = styled.ul`
 `;
 
 export const IconProfile = styled.span`
-  background: ${(props) => props.theme.colors.baseFont1};
+  background: #69ff8f;
   width: 40px;
   height: 40px;
   border-radius: 50%;
