@@ -4,8 +4,7 @@ export default function Header() {
   return (
     <Container>
       <List>
-        <span />
-        <li className="active">Dashboard</li>
+        <li>Dashboard</li>
         <li>Faturas</li>
       </List>
       <IconProfile />

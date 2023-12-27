@@ -2,7 +2,7 @@ import styled from "styled-components";
 
 export const Container = styled.header`
   width: 100%;
-  padding: 10px;
+  padding: 10px 40px;
   display: flex;
   align-items: center;
   justify-content: space-between;
@@ -13,9 +13,9 @@ export const List = styled.ul`
   display: flex;
   align-items: center;
   justify-content: center;
-  gap: 10px;
+  gap: 30px;
   font-size: 16px;
-  font-weight: bold;
+  font-weight: 550;
   color: ${(props) => props.theme.colors.baseFont2};
 
   li {
