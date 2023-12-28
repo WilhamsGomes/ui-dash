@@ -1,9 +1,12 @@
+import { useState } from "react";
 import {
   BoxChart,
   Container,
   RowCards,
   RowChart,
   HeaderFilter,
+  ActionsFilter,
+  Filters,
 } from "./styles";
 import Card from "../../components/Card/Card";
 import Ray from "../../components/Icons/Ray";
@@ -17,24 +20,85 @@ import {
   useValueTotal,
 } from "../../../app/services/invoices/cards";
 import { ChartBar } from "../../components/Charts/Bar";
+import { IParamsReq } from "../../../app/@types/Data";
 
 export default function Dashboard() {
-  const { data: dataElectricity } = useElectricity({ aggr: "count" });
-  const { data: dataCompensated } = useCompensated({ aggr: "count" });
-  const { data: dataValueCompensated } = useValueCompensated({ aggr: "count" });
-  const { data: dataValueTotal } = useValueTotal({ aggr: "count" });
+  const [clientInput, setClientInput] = useState("");
+  const [monthFilterGte, setMonthFilterGte] = useState("");
 
-  const { data: dataAggrElectricity } = useElectricity({ aggr: "date" });
-  const { data: dataAggrCompensated } = useCompensated({ aggr: "date" });
-  const { data: dataAggrValueCompensated } = useValueCompensated({
+  const [numClient, setNumClient] = useState("");
+  const [gteMonth, setGteMonth] = useState("");
+
+  const paramsCount: IParamsReq = {
+    aggr: "count",
+    ...(numClient && { num_client: numClient }),
+    ...(gteMonth && { gte_month: +gteMonth }),
+  };
+
+  const paramsAggr: IParamsReq = {
     aggr: "date",
-  });
-  const { data: dataAggrValueTotal } = useValueTotal({ aggr: "date" });
+    ...(numClient && { num_client: numClient }),
+    ...(gteMonth && { gte_month: +gteMonth }),
+  };
+
+  const { data: dataElectricity } = useElectricity(paramsCount);
+  const { data: dataCompensated } = useCompensated(paramsCount);
+  const { data: dataValueCompensated } = useValueCompensated(paramsCount);
+  const { data: dataValueTotal } = useValueTotal(paramsCount);
+
+  const { data: dataAggrElectricity } = useElectricity(paramsAggr);
+  const { data: dataAggrCompensated } = useCompensated(paramsAggr);
+  const { data: dataAggrValueCompensated } = useValueCompensated(paramsAggr);
+  const { data: dataAggrValueTotal } = useValueTotal(paramsAggr);
+
+  function searchToFilter() {
+    setNumClient(clientInput);
+    setGteMonth(monthFilterGte);
+  }
+
+  function clearFilters() {
+    setNumClient("");
+    setClientInput("");
+    setGteMonth("");
+    setMonthFilterGte("");
+  }
 
   return (
     <Container>
       <HeaderFilter>
-        <input placeholder="Nº do cliente" />
+        <Filters>
+          <input
+            placeholder="Nº do cliente"
+            value={clientInput}
+            onChange={(e) => setClientInput(e.target.value)}
+          />
+          <div>
+            <span>A partir de:</span>
+            <select
+              value={monthFilterGte}
+              onChange={(e) => setMonthFilterGte(e.target.value)}
+            >
+              <option value="">Selecione um mês</option>
+              <option value="1">Janeiro</option>
+              <option value="2">Fevereiro</option>
+              <option value="3">Março</option>
+              <option value="4">Abril</option>
+              <option value="5">Maio</option>
+              <option value="6">Junho</option>
+              <option value="7">Julho</option>
+              <option value="8">Agosto</option>
+              <option value="9">Setembro</option>
+              <option value="10">Outubro</option>
+              <option value="11">Novembro</option>
+              <option value="12">Dezembro</option>
+            </select>
+          </div>
+        </Filters>
+
+        <ActionsFilter>
+          <button onClick={() => clearFilters()}>Limpar</button>
+          <button onClick={() => searchToFilter()}>Filtrar</button>
+        </ActionsFilter>
       </HeaderFilter>
 
       <RowCards>
@@ -99,19 +163,20 @@ export default function Dashboard() {
             )}
             dataset={[
               {
-                data: dataAggrValueCompensated?.data.map(
-                  (item: { sum: number; date: string }) => item.sum * -1
-                ),
-                label: "Economia GD (R$)",
-                backgroundColor: "#EEEEEE",
-              },
-              {
                 data: dataAggrValueTotal?.data.map(
                   (item: { sum: number; date: string }) => item.sum
                 ),
                 label: "Valor Total sem GD",
                 backgroundColor: "#69ff8f",
               },
+              {
+                data: dataAggrValueCompensated?.data.map(
+                  (item: { sum: number; date: string }) => item.sum * -1
+                ),
+                label: "Economia GD (R$)",
+                backgroundColor: "#EEEEEE",
+              },
+              
             ]}
           />
         </BoxChart>

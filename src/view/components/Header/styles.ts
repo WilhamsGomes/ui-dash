@@ -18,6 +18,10 @@ export const List = styled.ul`
   font-weight: 550;
   color: ${(props) => props.theme.colors.baseFont2};
 
+  a {
+    color: ${(props) => props.theme.colors.baseFont2};
+  }
+
   li {
     cursor: pointer;
     transition: all 0.2s ease-in;

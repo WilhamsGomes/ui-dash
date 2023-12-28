@@ -14,6 +14,9 @@ export const Container = styled.div`
 
 export const HeaderFilter = styled.div`
   width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
 
   input {
     min-width: 280px;
@@ -24,6 +27,80 @@ export const HeaderFilter = styled.div`
     background: transparent;
     padding-left: 10px;
     color: ${(props) => props.theme.colors.baseFont1};
+
+    &::placeholder {
+      color: ${(props) => props.theme.colors.baseFont1};
+    }
+  }
+
+  @media (${(props) => props.theme.breaks.md}) {
+    flex-direction: column;
+    gap: 20px;
+    align-items: flex-end;
+  }
+
+  @media (${(props) => props.theme.breaks.sm}) {
+    flex-direction: column;
+    align-items: center;
+  }
+`;
+
+export const Filters = styled.div`
+  display: flex;
+  align-items: center;
+  gap: 20px;
+
+  div {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+    font-size: 12px;
+    color: ${(props) => props.theme.colors.baseFont1};
+
+    select {
+      background: #69ff8f;
+      border: none;
+      height: 30px;
+      border-radius: 5px;
+      font-weight: 600;
+      margin-left: -10px;
+    }
+  }
+  
+  @media (${(props) => props.theme.breaks.md}) {
+    width: 100%;
+    gap: 20px;
+    align-items: flex-end;
+    justify-content: space-between;
+  }
+
+  @media (${(props) => props.theme.breaks.sm}) {
+    flex-direction: column;
+    align-items: center;
+  }
+`;
+
+export const ActionsFilter = styled.div`
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+
+  button {
+    min-width: 80px;
+    height: 30px;
+    border: none;
+    border-radius: 5px;
+    font-weight: bold;
+  }
+
+  button:nth-child(2) {
+    background: #69ff8f;
+  }
+
+  button:nth-child(1) {
+    background: transparent;
+    color: #fff;
   }
 `;
 
