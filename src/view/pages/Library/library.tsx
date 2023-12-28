@@ -34,7 +34,7 @@ export default function Library() {
   }
 
   function searchToFilter() {
-    setNumClient(clientInput);
+    setNumClient(clientInput.trim());
   }
 
   function clearFilters() {

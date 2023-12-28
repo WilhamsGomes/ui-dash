@@ -52,7 +52,7 @@ export default function Dashboard() {
   const { data: dataAggrValueTotal } = useValueTotal(paramsAggr);
 
   function searchToFilter() {
-    setNumClient(clientInput);
+    setNumClient(clientInput.trim());
     setGteMonth(monthFilterGte);
   }
 
